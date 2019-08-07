@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="messaging">
+    <br>
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <h4>{{currentUser?.username}}</h4>
+            <a href="#" onclick="return false;" (click)="logOut()">
+              <i class="fa fa-sign-out"></i><span>Logout</span>
+            </a>
+          </div>
+          <div class="srch_bar">
+            <div class="stylish-input-group">
+              <a href="#" onclick="return false;" (click)="goAddGroup()">
+                <i class="fa fa-plus"></i><span> Add Group</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="inbox_chat">
+          <div class="chat_list" *ngFor="let user of users" (click)="goToUser(user.id)">
+            <div class="chat_people">
+              <div class="chat_img">
+                <img src="./assets/images/user-profile.png" alt="sunil"> </div>
+              <div class="chat_ib">
+                <h5>{{user.username}}
+                  <span class="chat_date">{{user.email}} <i class="fa fa-circle" style="color: #2ecc71;" aria-hidden="true" *ngIf="user.status === true"></i><i class="fa fa-circle" style="color: #95a5a6;" aria-hidden="true" *ngIf="user.status === false"></i>
+                  </span>
+                </h5>
+                <p></p>
+              </div>
+            </div>
+          </div>
+          <div class="chat_list" *ngFor="let group of groups" (click)="goToGroup(group.id)">
+            <div class="chat_people">
+              <div class="chat_img">
+                <img src="./assets/images/team.png" alt="sunil"> </div>
+              <div class="chat_ib">
+                <h5>{{group.name}}
+                  <span class="chat_date">Dec 25</span>
+                </h5>
+                <p *ngIf="group.messages[0]">
+                  {{group.messages[group.messages.length - 1].body}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+      <!--Esta es parte del componente de grupo-->
+    </div>
+  </div>
+</div>

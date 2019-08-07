@@ -1,0 +1,65 @@
+<div class="mesgs">
+  <h3>{{group?.name}}</h3>
+  <i [hidden]="isTyping">{{user?.username}} esta escribiendo...</i>
+  <div [hidden]="!isTyping">
+    <span *ngFor="let user of users">
+      {{user.username}}, 
+    </span>
+  </div>
+  <hr>
+  <div class="msg_history" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div *ngFor="let message of messages">
+      <div class="incoming_msg" *ngIf="message.user_id !== currentUser?.id">
+        <div class="incoming_msg_img">
+          <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+        <div class="received_msg">
+          <div class="received_withd_msg">
+            <p *ngIf="message.body">{{message.body}}
+            </p>
+            <div *ngIf="message.file">
+              <div *ngIf="message.type === 'image'">
+                <img src="http://{{host}}{{port}}/{{message.file}}" alt="">
+              </div>
+              <div style="margin-top: -25px;" *ngIf="message.type === 'video'">
+                <video src="http://{{host}}{{port}}/{{message.file}}" controls width="300" height="280"></video>
+              </div>
+              <div *ngIf="message.type === 'audio'">
+                <audio src="http://{{host}}{{port}}/{{message.file}}" controls></audio>
+              </div>
+            </div>
+            <span class="time_date"> {{message.username}} | Received</span>
+          </div>
+        </div>
+      </div>
+      <div class="outgoing_msg" *ngIf="message.user_id === currentUser?.id">
+        <div class="sent_msg" >
+          <p *ngIf="message.body">{{message.body}}
+          </p>
+          <div *ngIf="message.file">
+            <div *ngIf="message.type === 'image'">
+              <img src="http://{{host}}{{port}}/{{message.file}}" alt="">
+            </div>
+            <div style="margin-top: -25px;" *ngIf="message.type === 'video'">
+              <video src="http://{{host}}{{port}}/{{message.file}}" controls width="300" height="280"></video>
+            </div>
+            <div *ngIf="message.type === 'audio'">
+              <audio src="http://{{host}}{{port}}/{{message.file}}" controls></audio>
+            </div>
+          </div>
+          <span class="time_date"> {{message.username}} | Sent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="type_msg">
+    <div class="input_msg_write">
+      <form [formGroup]="msgForm" (ngSubmit)="onSubmit()">
+        <input type="text" formControlName="message" class="write_msg" placeholder="Type a message" />
+        <input type="file" accept="image/*,video/*,audio/*" fo formControlName="file" (change)="onFileChange($event.target.files)"/>
+        <button class="msg_send_btn" type="submit">
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

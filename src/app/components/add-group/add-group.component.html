@@ -1,0 +1,24 @@
+<div class="mesgs">
+  <div class="msg_history" style="padding: 15px;">
+    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" *ngIf="hiddenUsers">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Name group:</label>
+        <input type="email" class="form-control" formControlName="name" placeholder="Name group">
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+    <br>
+    <div [hidden]="hiddenUsers">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let user of users;">
+          {{user.username}}
+          <span class="badge badge-primary badge-pill" style="cursor: pointer;" (click)="addParticipant(user)">Add</span>
+        </li>
+      </ul>
+      <br>
+      <div class="pull-right">
+        <button class="btn btn-success" (click)="goToGroup()">Finish</button>
+      </div>
+    </div>
+  </div>
+</div>
